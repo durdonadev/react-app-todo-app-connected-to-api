@@ -1,5 +1,7 @@
 import { todoApi } from "./api/todo";
 import { useEffect, useState } from "react";
+import { Form } from "./Form.js";
+import { Todos } from "./Todos.js";
 import "./App.css";
 
 const App = () => {
@@ -17,8 +19,8 @@ const App = () => {
             });
     }, []);
 
-    const handleTodoInputChange = (e) => {
-        setTodoInputValue(e.target.value);
+    const handleTodoInputChange = (value) => {
+        setTodoInputValue(value);
     };
 
     const createTodo = (e) => {
@@ -93,42 +95,18 @@ const App = () => {
     return (
         <main>
             <h1>Todo App</h1>
-            <form onSubmit={createTodo}>
-                <input
-                    placeholder="What is in your mind?"
-                    value={todoInputValue}
-                    onChange={handleTodoInputChange}
-                />
-                <input
-                    value="Add Todo"
-                    type="submit"
-                    disabled={isSubmitButtonDisabled}
-                />
-            </form>
-            <ul>
-                {todos.map((todo) => {
-                    return (
-                        <li key={todo.id}>
-                            <span>{todo.text}</span>
-                            <select
-                                value={todo.status}
-                                onChange={(e) =>
-                                    updateStatus(todo.id, e.target.value)
-                                }
-                            >
-                                <option value={"TODO"}>Todo</option>
-                                <option value={"INPROGRESS"}>
-                                    In Progress
-                                </option>
-                                <option value={"DONE"}>Done</option>
-                            </select>
-                            <button onClick={() => deleteTodo(todo.id)}>
-                                Delete
-                            </button>
-                        </li>
-                    );
-                })}
-            </ul>
+
+            <Form
+                isSubmitButtonDisabled={isSubmitButtonDisabled}
+                todoValue={todoInputValue}
+                handleTodoValue={handleTodoInputChange}
+                createTodo={createTodo}
+            />
+            <Todos
+                todos={todos}
+                updateStatus={updateStatus}
+                deleteTodo={deleteTodo}
+            />
         </main>
     );
 };
