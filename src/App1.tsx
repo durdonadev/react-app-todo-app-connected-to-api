@@ -5,12 +5,6 @@ import { Todos } from "./Todos";
 import "./App.css";
 import { todoReducer } from "./todoReducer";
 
-type Todo = {
-    id: string;
-    text: string;
-    status: "TODO" | "INPROGRESS" | "DONE";
-};
-
 const App: React.FC = () => {
     const [todoInputValue, setTodoInputValue] = useState<string>("");
     const [todos, dispatch] = useReducer(todoReducer, []);
